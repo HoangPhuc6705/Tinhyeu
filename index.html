@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOVE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nunito:wght@600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            color: rgba(255, 255, 255, 0.5);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(0, #8A2387, #E94057, #F27121);
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 5vh;
+        }
+
+        .main h1 {
+            font-size: 10vh;
+        }
+
+        .main .nameform {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .main .nameform input {
+            outline: none;
+            border: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            height: 4vh;
+            width: 30vh;
+            color: white;
+        }
+
+        .main .nameform input[type=text] {
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .main button {
+            cursor: pointer;
+            appearance: none;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1vh 4vh;
+            border-radius: 5px;
+        }
+
+        .main button:active {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes opacity {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-5vh);
+            }
+        }
+
+        @keyframes opacity2 {
+            0% {
+                opacity: 0;
+                transform: translateY(5vh);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0vh);
+            }
+        }
+        body {
+            position: relative;
+        }
+        body a {
+            font-size: 12px;
+            position: absolute;
+            bottom: 2%;
+        }
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .main p {
+            text-align: center;
+        }
+        .main h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>LOVE</h1>
+        <div class="nameform">
+            <p>Nhập tên của người ấy</p>
+            <input type="text">
+        </div>
+        <button type="button">Kết quả</button>
+    </div>
+</body>
+<script>
+    document.querySelector('.main button').onclick = () => { active() }
+    const opacityEff = (str) => {
+        const a = document.querySelector('.main');
+        a.style.animation = 'opacity 0.5s';
+        setTimeout(() => {
+            a.remove();
+            setTimeout(() => {
+                createNew(str);
+            }, 1000);
+
+        }, 500);
+    }
+    const createNew = (str) => {
+        const successful = Math.floor(Math.random() * 101);
+        const a =
+            `
+        <div class="main">
+            <h2>Tỉ lệ thành công của bạn và ${str}</h2>
+            <p class="result">${successful}%</p>
+        </div>
+        <a href="index.html">Nhấn vào đây để quay lại</a>
+        `;
+        document.querySelector('body').innerHTML = a;
+        document.querySelector('.main').style.animation = 'opacity2 0.5s';
+    }
+    const active = () => {
+        var name = document.querySelector('.main .nameform input').value;
+        console.log(name);
+        if (name == '' || !isNaN(name)) {
+            alert('Vui lòng nhập đúng !');
+            return false;
+        }
+        opacityEff(name);
+    }
+</script>
+
+</html>
