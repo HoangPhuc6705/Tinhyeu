@@ -16,6 +16,7 @@
             font-family: 'Nunito', sans-serif;
             color: rgba(255, 255, 255, 0.5);
             -webkit-tap-highlight-color: transparent;
+            overflow: hidden;
         }
 
         body {
@@ -123,10 +124,83 @@
             top: 1%;
             font-size: 10px;
         }
+        .history {
+            position: absolute;
+            top: 1%;
+            right: 1%;
+            appearance: none;
+            outline: none;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1vh 2vh;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .history:active {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .root {
+            position: absolute;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .table {
+            width: 50vh;
+            height: 70vh;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .inside {
+            width: 95%;
+            height: 80%;
+            overflow-y: auto;
+        }
+        .table .inside div {
+            width: 100%;
+            height: 20%;
+            border: 2px solid black;
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .table {
+            position: relative;
+        }
+        .table button {
+            position: absolute;
+            bottom: 1%;
+            padding: 1vh 2vh;
+            color: black;
+        }
+        .inside div .hisinfo {
+            width: 70%;
+            height: 100%;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .inside div .per {
+            width: 30%;
+            height: 100%;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .inside div .hisinfo p, .inside div .per p {
+            color: black;
+        }
     </style>
 </head>
 
 <body>
+    <div class="root"></div>
     <div class="main">
         <h1>LOVE</h1>
         <div class="nameform">
@@ -140,6 +214,7 @@
         <button type="button">Kết quả</button>
     </div>
     <p class="copyright">Bản quyền thuộc về Fmack</p>
+    <button type="button" class="history">Lịch sử nhập</button>
 </body>
 <script>
     document.querySelector('.main button').onclick = () => { active() }
@@ -160,7 +235,7 @@
             `
             <p class="copyright">Bản quyền thuộc về Fmack</p>
             <div class="main">
-                <h2>Tỉ lệ thành công của ${str1} và ${str}</h2>
+                <h2>Khả năng thành công của ${str1} và ${str}</h2>
                 <p class="result">${successful}%</p>
             </div>
             <a href="index.html">Nhấn vào đây để quay lại</a>
@@ -168,6 +243,7 @@
         document.querySelector('body').innerHTML = a;
         document.querySelector('.main p').style.fontSize = '5vh';
         document.querySelector('.main').style.animation = 'opacity2 0.5s';
+        save(str1, str, successful);
     }
     const active = () => {
         var name = document.querySelectorAll('.main .nameform input')[0].value;
@@ -178,6 +254,63 @@
         }
         opacityEff(name1, name);
     }
+    const save = (S1, S, N) => {
+        if (!localStorage.n) {
+            var a = [];
+            localStorage.setItem("n", "-1");
+            localStorage.setItem("info", JSON.stringify(a));
+        }
+        var n = Number(localStorage.getItem("n")) + 1;
+        var A = JSON.parse(localStorage.getItem("info"));
+
+        A[n] = {
+            name1: S1,
+            name: S,
+            percent: N
+        }
+
+        A = localStorage.setItem("info", JSON.stringify(A));
+        n = localStorage.setItem("n", JSON.stringify(n));
+    }
+
+    document.querySelector('.history').onclick = () => { historyls() };
+    const historyls = () => {
+        const table = document.createElement('div');
+        table.className = 'table';
+        const root = document.querySelector('.root');
+        root.appendChild(table);
+
+        const inside = document.createElement('div');
+        inside.className = 'inside';
+        table.appendChild(inside);
+
+        const n = Number(localStorage.getItem('n'));
+        const A = JSON.parse(localStorage.getItem('info'));
+
+        for (let i = 0; i <= n; i++) {
+            const box = document.createElement('div');
+            inside.appendChild(box);
+
+            box.innerHTML = 
+            `
+            <div class='hisinfo'>
+                <p>${A[i].name1}</p>
+                <p>${A[i].name}</p>
+            </div>
+            <div class='per'>
+                <p>${A[i].percent}%</p>
+            </div>
+            `
+        }
+
+        const close = document.createElement('button');
+        table.appendChild(close);
+        close.innerHTML = 'Đóng';
+        close.onclick = () => {
+            table.remove();
+        }
+    }
+
 </script>
 
 </html>
