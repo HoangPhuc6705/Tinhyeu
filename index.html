@@ -99,31 +99,38 @@
                 transform: translateY(0vh);
             }
         }
+
         body {
             position: relative;
         }
+
         body a {
             font-size: 12px;
             position: absolute;
             bottom: 2%;
         }
+
         .main {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
+
         .main p {
             text-align: center;
         }
+
         .main h2 {
             text-align: center;
         }
+
         .copyright {
             position: absolute;
             top: 1%;
             font-size: 10px;
         }
+
         .history {
             position: absolute;
             top: 1%;
@@ -136,9 +143,11 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .history:active {
             background: rgba(255, 255, 255, 0.5);
         }
+
         .root {
             position: absolute;
             min-height: 100vh;
@@ -146,6 +155,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .table {
             width: 50vh;
             height: 70vh;
@@ -155,11 +165,13 @@
             align-items: center;
             justify-content: center;
         }
+
         .inside {
             width: 95%;
             height: 80%;
             overflow-y: auto;
         }
+
         .table .inside div {
             width: 100%;
             height: 20%;
@@ -167,15 +179,18 @@
             display: flex;
             margin-bottom: 5px;
         }
+
         .table {
             position: relative;
         }
+
         .table button {
             position: absolute;
             bottom: 1%;
             padding: 1vh 2vh;
             color: black;
         }
+
         .inside div .hisinfo {
             width: 70%;
             height: 100%;
@@ -184,7 +199,9 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            gap: 10px;
         }
+
         .inside div .per {
             width: 30%;
             height: 100%;
@@ -193,7 +210,9 @@
             justify-content: center;
             align-items: center;
         }
-        .inside div .hisinfo p, .inside div .per p {
+
+        .inside div .hisinfo p,
+        .inside div .per p {
             color: black;
         }
     </style>
@@ -273,7 +292,10 @@
         n = localStorage.setItem("n", JSON.stringify(n));
     }
 
-    document.querySelector('.history').onclick = () => { historyls() };
+    document.querySelector('.history').onclick = () => {
+        document.querySelector('.history').disabled = true;
+        historyls();
+    };
     const historyls = () => {
         const table = document.createElement('div');
         table.className = 'table';
@@ -291,8 +313,8 @@
             const box = document.createElement('div');
             inside.appendChild(box);
 
-            box.innerHTML = 
-            `
+            box.innerHTML =
+                `
             <div class='hisinfo'>
                 <p>${A[i].name1}</p>
                 <p>${A[i].name}</p>
@@ -308,6 +330,7 @@
         close.innerHTML = 'Đóng';
         close.onclick = () => {
             table.remove();
+            document.querySelector('.history').disabled = false;
         }
     }
 
