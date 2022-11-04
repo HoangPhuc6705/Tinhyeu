@@ -309,7 +309,7 @@
         const n = Number(localStorage.getItem('n'));
         const A = JSON.parse(localStorage.getItem('info'));
 
-        for (let i = 0; i <= n; i++) {
+        for (let i = n; i >= 0; i--) {
             const box = document.createElement('div');
             inside.appendChild(box);
 
